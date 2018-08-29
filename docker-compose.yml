@@ -10,24 +10,23 @@ services:
       MYSQL_USER: dockeruser
       MYSQL_PASSWORD: d0cK3r_Us3r
     ports:
-    - "3306:3306"
+      - "3306:3306"
   backend:
-    image: nginx:1.15.2-alpine
+    container_name: backend
+    image: webdevops/php-apache-dev:7.2
     ports:
-    - "8080:8080"
+      - "8080:80"
+      - "443:443"
     volumes:
-    - ./backend:/code
-    - ./backend/site.conf:/etc/nginx/conf.d/site.conf
-  php:
-    image: chialab/php:7.2
-    volumes:
-    - ./backend:/code
-    links:
-      - mysql_db
+      - ./backend:/app
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/public
+      - TMDB_API_KEY=fcf049aaeafe3ad83ee5ff9e33bb786b
   frontend:
     image: node:10.9.0-alpine
     ports:
-    - "3000:3000"
+      - "3000:3000"
     volumes:
-    - ./frontend:/app
+      - ./frontend:/app
     working_dir: /app
+    command: npm start

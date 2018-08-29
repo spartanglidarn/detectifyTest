@@ -15,14 +15,14 @@ class CreateTopRatedMoviesTable extends Migration
     {
         Schema::create('top_rated_movies', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('tmdb_id');
+            $table->integer('tmdb_id');
             $table->string('release_date');
             $table->string('overview');
             $table->string('original_title');
             $table->string('title');
             $table->string('original_language');
             $table->float('popularity');
-            $table->int('vote_count');
+            $table->integer('vote_count');
             $table->timestamps();
         });
     }

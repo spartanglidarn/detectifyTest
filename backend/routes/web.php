@@ -11,6 +11,7 @@
 |
 */
 
+date_default_timezone_set('Europe/Stockholm');
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
