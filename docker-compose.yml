@@ -11,22 +11,18 @@ services:
       MYSQL_PASSWORD: d0cK3r_Us3r
     ports:
       - "3306:3306"
-  backend:
-    container_name: backend
+  detectify:
+    container_name: detectify
     image: webdevops/php-apache-dev:7.2
     ports:
-      - "8080:80"
+      - "3000:80"
       - "443:443"
     volumes:
-      - ./backend:/app
+      - ./backend:/app/backend
+      - ./frontend/dist:/app
     environment:
-      - WEB_DOCUMENT_ROOT=/app/public
+      - WEB_DOCUMENT_ROOT=/app
       - TMDB_API_KEY=fcf049aaeafe3ad83ee5ff9e33bb786b
-  frontend:
-    image: node:10.9.0-alpine
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-    working_dir: /app
-    command: npm start
+    working_dir: /app/backend
+    depends_on:
+      -  mysql_db
